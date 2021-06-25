@@ -1,24 +1,23 @@
 package model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-public class Continent {
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    @OneToMany(mappedBy = "continent",cascade = CascadeType.REMOVE)
-    private List<Country> countryList;
+    @ManyToOne
+    private Country country;
 
-    public Continent() {
+    public City() {
     }
 
-
-    public Continent(String continentName) {
-        this.name = continentName;
+    public City(String name, Country country) {
+        this.name = name;
+        this.country = country;
     }
 
     public int getId() {
@@ -37,11 +36,20 @@ public class Continent {
         this.name = name;
     }
 
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
-        return "Continent{" +
+        return "City{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", country=" + country +
                 '}';
     }
 }

@@ -1,52 +1,59 @@
 package model;
 
-public class Country {
+import javax.persistence.*;
+import java.util.List;
 
-    private int id;
-    private String name;
-    private int continentId;
+    @Entity
+    public class Country {
 
-    public Country(String name, int continentId) {
-        this.name = name;
-        this.continentId = continentId;
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private int id;
+        private String name;
+        @ManyToOne
+        private Continent continent;
+        @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "country")
+        private List<City> cities;
+
+        public Country() {
+        }
+
+        public Country(String name, Continent continent) {
+            this.name = name;
+            this.continent = continent;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Continent getContinent() {
+            return continent;
+        }
+
+        public void setContinent(Continent continent) {
+            this.continent = continent;
+        }
+
+        @Override
+        public String toString() {
+            return "Country{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", continent=" + continent +
+                    '}';
+        }
     }
 
-    public Country(int id, String name, int continentId) {
-        this.id = id;
-        this.name = name;
-        this.continentId = continentId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getContinentId() {
-        return continentId;
-    }
-
-    public void setContinentId(int continentId) {
-        this.continentId = continentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Country{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", continentId=" + continentId +
-                '}';
-    }
-}
